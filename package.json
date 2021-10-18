@@ -1,0 +1,31 @@
+{
+  "name": "nodejsapp",
+  "version": "0.0.1",
+  "description": "This is a simple web app that will support a user based authentication system.",
+  "main": "node index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js",
+    "dev": "nodemon app"
+  },
+  "env": {
+    "production": "true",
+    "verboseApiCalls": "false"
+  },
+  "author": "alexandra mitu",
+  "license": "ISC",
+  "dependencies": {
+    "cookie-parser": "^1.4.5",
+    "ejs": "^3.1.6",
+    "express": "^4.17.1",
+    "express-session": "^1.17.2",
+    "google-auth-library": "^7.10.0",
+    "login-with-twitter": "^1.2.4",
+    "mysql": "^2.18.1",
+    "passport": "^0.5.0",
+    "passport-github": "^1.1.0",
+    "passport-twitter": "^1.0.4",
+    "path": "^0.12.7",
+    "twitter": "^1.7.1"
+  }
+}
