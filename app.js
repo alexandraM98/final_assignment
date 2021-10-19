@@ -63,60 +63,8 @@ app.use(passport.session());
 
 /**Google Auth starts here....
 */
-const {OAuth2Client} = require('google-auth-library');
-const CLIENT_ID = process.env.googleClientID;
-const client = new OAuth2Client(CLIENT_ID);
-
-function checkAuthenticated(req, res, next){
-
-    let token = req.cookies['session-token'];
-
-    let user = {};
-    async function verify() {
-        const ticket = await client.verifyIdToken({
-            idToken: token,
-            audience: CLIENT_ID,  // Specify the CLIENT_ID of the app that accesses the backend
-        });
-        const payload = ticket.getPayload();
-        user.name = payload.name;
-        user.email = payload.email;
-        user.picture = payload.picture;
-      }
-      verify()
-      .then(()=>{
-          req.user = user;
-          next();
-      })
-      .catch(err=>{
-          res.redirect('/login')
-      })
-
-};
 
 
-app.post('/login', (req,res)=>{
-    let token = req.body['token'];
-    async function verify() {
-        const ticket = await client.verifyIdToken({
-            idToken: token,
-            audience: CLIENT_ID  // Specify the CLIENT_ID of the app that accesses the backend
-        });
-        const payload = ticket.getPayload();
-        const userid = payload['sub'];
-      }
-      verify()
-      .then(()=>{
-          res.cookie('session-token', token);
-          res.send('success')
-      })
-      .catch(console.error);
-
-});
-
-app.get('/patient', checkAuthenticated, (req, res)=>{
-    let user = req.user;
-    res.render('home/patient', {user});
-});
 
 /**Google Auth ends here....
 */
@@ -137,8 +85,8 @@ app.get('/auth/github',
 app.get('/auth/github/callback', 
   passport.authenticate('github', { failureRedirect: '/login' }),
   function(req, res) {
-    // Successful authentication, redirect to physician view.
-    res.redirect('/physician');
+    // Successful authentication, redirect to patient view.
+    res.redirect('/patient');
   });
 
 
@@ -151,13 +99,10 @@ app.get('/auth/github/callback',
     }
 };
 
-  app.get('/physician', isAuth, (req, res)=>{
-    res.render('home/physician');
+  app.get('/patient', isAuth, (req, res)=>{
+    res.render('home/patient');
   });
 
-  app.get('/patientList', isAuth, (req, res)=>{
-    fetchData(res);
-  });
 
 /**GitHub Auth ends here....
 */
@@ -172,12 +117,12 @@ app.get('/auth/twitter/callback',
   passport.authenticate('twitter', { failureRedirect: '/login' }),
   function(req, res) {
     // Successful authentication, redirect home.
-    res.redirect('/researcher');
+    res.redirect('/physician');
   });
 
 
-  app.get('/researcher', isAuth, (req, res)=>{
-    res.render('home/researcher');
+  app.get('/physician', isAuth, (req, res)=>{
+    res.render('home/physician');
 });
 
 /**Twitter Auth ends here....
