@@ -5,7 +5,8 @@ const session = require('express-session');
 const passport = require("passport");
 const cookieParser = require("cookie-parser");
 const app = express();
-const mysql = require('mysql');
+const bcrypt = require('bcrypt');
+const { ROLE } = require('./data');
 
 /* Require dotenv */
 require('dotenv').config();
@@ -21,6 +22,8 @@ app.listen(app.get("port"),function(){
 /* Setting the app views */
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs"); //ejs is a JavaScript templating engine and stands for Effective JavaScript
+
+app.use(express.urlencoded({ extended: false})); //This is telling our application that we wanna take the forms for our emails and password and we want build the access into our request variable inside of our post method
 
 /* Using the route files from the web and api folders under routes */
 //var routes = require("./routes");
@@ -61,14 +64,27 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
-/**Google Auth starts here....
-*/
+const users = []
 
+app.post('/signup', async(req, res) => {
+  try {
+      const hashedPassword = await bcrypt.hash(req.body.password, 10)
+      users.push({
+          id: Date.now().toString(),
+          name: req.body.name,
+          email: req.body.email,
+          password: hashedPassword
+      })
+      res.redirect('/login');
+  } catch {
+      res.redirect('/signup');
+  }
+  console.log(users);
+})
 
+app.post('/login', function(req, res) {
 
-/**Google Auth ends here....
-*/
-
+});
 
 app.get('/logout', (req, res) => {
     res.clearCookie('session-token');

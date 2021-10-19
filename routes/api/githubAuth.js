@@ -16,7 +16,6 @@ passport.use(new GitHubStrategy({
     /* User.findOrCreate({ githubId: profile.id }, function (err, user) {
       return cb(err, user);
     }); */
-    console.log(profile);
     cb(null, profile)
   }
 ));
