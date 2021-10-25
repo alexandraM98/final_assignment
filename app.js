@@ -5,9 +5,9 @@ const session = require('express-session');
 const passport = require("passport");
 const cookieParser = require("cookie-parser");
 const app = express();
-
 /* Require dotenv */
 require('dotenv').config();
+
 
 
 /* Setting the app port */
