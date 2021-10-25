@@ -5,8 +5,6 @@ const session = require('express-session');
 const passport = require("passport");
 const cookieParser = require("cookie-parser");
 const app = express();
-const bcrypt = require('bcrypt');
-const { ROLE } = require('./data');
 
 /* Require dotenv */
 require('dotenv').config();
@@ -23,7 +21,6 @@ app.listen(app.get("port"),function(){
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs"); //ejs is a JavaScript templating engine and stands for Effective JavaScript
 
-app.use(express.urlencoded({ extended: false})); //This is telling our application that we wanna take the forms for our emails and password and we want build the access into our request variable inside of our post method
 
 /* Using the route files from the web and api folders under routes */
 //var routes = require("./routes");
@@ -64,27 +61,67 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
-const users = []
+/**Google Auth starts here....
+*/
+const {OAuth2Client} = require('google-auth-library');
+const CLIENT_ID = process.env.googleClientID;
+const client = new OAuth2Client(CLIENT_ID);
 
-app.post('/signup', async(req, res) => {
-  try {
-      const hashedPassword = await bcrypt.hash(req.body.password, 10)
-      users.push({
-          id: Date.now().toString(),
-          name: req.body.name,
-          email: req.body.email,
-          password: hashedPassword
-      })
-      res.redirect('/login');
-  } catch {
-      res.redirect('/signup');
-  }
-  console.log(users);
+function checkAuthenticated(req, res, next){
+
+  let token = req.cookies['session-token'];
+
+  let user = {};
+  async function verify() {
+      const ticket = await client.verifyIdToken({
+          idToken: token,
+          audience: CLIENT_ID,  // Specify the CLIENT_ID of the app that accesses the backend
+      });
+      const payload = ticket.getPayload();
+      user.name = payload.name;
+      user.email = payload.email;
+      user.picture = payload.picture;
+    }
+    verify()
+    .then(()=>{
+        req.user = user;
+        next();
+    })
+    .catch(err=>{
+        res.redirect('/login')
+    })
+
+};
+
+
+app.post('/login', (req,res)=>{
+  let token = req.body.token;
+
+  async function verify() {
+      const ticket = await client.verifyIdToken({
+          idToken: token,
+          audience: CLIENT_ID,  // Specify the CLIENT_ID of the app that accesses the backend
+      });
+      const payload = ticket.getPayload();
+      const userid = payload['sub'];
+    }
+    verify()
+    .then(()=>{
+        res.cookie('session-token', token);
+        res.send('success')
+    })
+    .catch(console.error);
+
 })
 
-app.post('/login', function(req, res) {
+app.get('/patient', checkAuthenticated, (req, res)=>{
+  let user = req.user;
+  res.render('home/patient', {user});
+})
 
-});
+/**Google Auth ends here....
+*/
+
 
 app.get('/logout', (req, res) => {
     res.clearCookie('session-token');
@@ -102,7 +139,7 @@ app.get('/auth/github/callback',
   passport.authenticate('github', { failureRedirect: '/login' }),
   function(req, res) {
     // Successful authentication, redirect to patient view.
-    res.redirect('/patient');
+    res.redirect('/researcher');
   });
 
 
@@ -115,8 +152,8 @@ app.get('/auth/github/callback',
     }
 };
 
-  app.get('/patient', isAuth, (req, res)=>{
-    res.render('home/patient');
+  app.get('/researcher', isAuth, (req, res)=>{
+    res.render('home/researcher');
   });
 
 

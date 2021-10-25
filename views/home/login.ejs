@@ -2,19 +2,9 @@
   <h1>Welcome to the Sign In page!</h1>
   <p>Please choose your sign-in method below...</p>
 
-
-  <form action="/login" method="POST">
-    <div>
-      <label for="email">Email</label>
-      <input type="email" id="email" name="email" required>
-    </div>
-    <div>
-      <label for="password">Password</label>
-      <input type="password" id="password" name="password" required>
-    </div>
-    <button type="submit">Login</button>
-  </form>
+  <div class="g-signin2" data-onsuccess="onSignIn"></div>
   <br>
+
   <form action="/auth/github">
     <input type="image" src="https://i.ibb.co/5rvhgrj/github.jpg" width="180" height="40" name="submit" alt="Log In with GitHub"/>
   </form>
@@ -23,5 +13,33 @@
     <input type="image" src="https://i.ibb.co/0Xkc80B/sign-in-with-twitter-gray-png-twimg-1920.png" name="submit" alt="Log In with Twitter"/>
   </form>
 
+  <script>
+
+    function onSignIn(googleUser) {
+      var id_token = googleUser.getAuthResponse().id_token;
+      
+      var xhr = new XMLHttpRequest();
+      xhr.open('POST', '/login');
+      xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.onload = function() {
+            console.log('Signed in as: ' + xhr.responseText);
+            if(xhr.responseText == 'success'){
+                signOut();
+                location.assign('/patient')
+            }
+        };
+        xhr.send(JSON.stringify({token : id_token}));
+  }
+
+</script>
+
+  <script>
+      function signOut() {
+          var auth2 = gapi.auth2.getAuthInstance();
+          auth2.signOut().then(function () {
+          console.log('User signed out.');
+          });
+      }
+  </script>
   
 <% include ("../_partials/_footer.ejs"); %>
