@@ -16,6 +16,14 @@ router.get('/videos', function(req, res) {
     res.render("home/videos");
 });
 
+router.get('/spiralPatientData', function(req, res) {
+    res.render("home/spiralPatientData");
+});
+
+router.get('/tappingExerciseData', function(req, res) {
+    res.render("home/tappingExerciseData");
+});
+
 router.get('/news', function(req, res) {
     res.render("home/news");
 });
