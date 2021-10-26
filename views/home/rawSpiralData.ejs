@@ -1,0 +1,24 @@
+
+<%- include ("../_partials/_doc_header.ejs"); %>
+
+<button id="first_spiral" onclick="display_raw_spiral_data(1)">First Spiral Exercise</button>
+<iframe id="patient1" width="100%" height="450" frameborder="0"
+data-src="https://observablehq.com/embed/@alexandram98/observable-plot?cells=table_1" src="about:blank"></iframe>
+
+<button id="second_spiral" onclick="display_raw_spiral_data(2)">Second Spiral Exercise</button>
+<iframe id="patient2" width="100%" height="450" frameborder="0"
+data-src="https://observablehq.com/embed/@alexandram98/observable-plot?cells=table_2" src="about:blank"></iframe>
+
+<button id="third_spiral" onclick="display_raw_spiral_data(3)">Third Spiral Exercise</button>
+<iframe id="patient3" width="100%" height="450" frameborder="0"
+data-src="https://observablehq.com/embed/@alexandram98/observable-plot?cells=table_3" src="about:blank"></iframe>
+
+
+<script>
+    function display_raw_spiral_data(id) {
+        var iframe = $("#patient" + id);
+        iframe.attr("src", iframe.data("src"));
+    }
+</script>
+
+<% include ("../_partials/_footer.ejs"); %>

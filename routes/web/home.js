@@ -32,8 +32,12 @@ router.get('/signup', function(req, res) {
     res.render("home/signup");
 });
 
-router.get('/patientProfile', function(req, res) {
-    res.render("home/patientProfile");
+router.get('/rawSpiralData', function(req, res) {
+    res.render("home/rawSpiralData");
+});
+
+router.get('/rawTappingData', function(req, res) {
+    res.render("home/rawTappingData");
 });
 
 
