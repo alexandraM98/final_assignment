@@ -26,7 +26,7 @@
             if (xhr.responseText == 'success') {
               signOut();
               //This is where the user will be redirected after signing in.
-              location.assign('/patient');
+              location.assign('home/patient');
             }
             };
             xhr.send(JSON.stringify({token: id_token}));
