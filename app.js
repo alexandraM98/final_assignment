@@ -6,9 +6,7 @@ const passport = require("passport");
 const cookieParser = require("cookie-parser");
 const app = express();
 /* Require dotenv */
-if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config();
-}
 
 
 
