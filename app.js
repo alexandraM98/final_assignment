@@ -46,7 +46,7 @@ app.use(cookieParser()); //used to store our user tokens for the session and als
 /* Initialising a session using passport*/
 app.use(
   session({
-      secret: process.env.PROCESS_SECRET,
+      secret: 'cat',
       resave: false,
       saveUninitialized: false,
       cookie: {
@@ -89,6 +89,7 @@ function checkAuthenticated(req, res, next){
       })
       .catch(err=>{
         console.log(err);
+          res.redirect('/login')
       })
 
 };
