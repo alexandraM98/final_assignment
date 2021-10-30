@@ -69,50 +69,54 @@ const client = new OAuth2Client(CLIENT_ID);
 
 function checkAuthenticated(req, res, next){
 
-  let token = req.cookies['session-token'];
+    let token = req.cookies['session-token'];
 
-  async function verify() {
-      const ticket = await client.verifyIdToken({
-          idToken: token,
-          audience: CLIENT_ID,  // Specify the CLIENT_ID of the app that accesses the backend
-      });
-      const payload = ticket.getPayload();
-    }
-    verify()
-    .then(()=>{
-        next();
-    })
-    .catch(err=>{
-        res.redirect('/login')
-    })
+    let user = {};
+    async function verify() {
+        const ticket = await client.verifyIdToken({
+            idToken: token,
+            audience: CLIENT_ID,  // Specify the CLIENT_ID of the app that accesses the backend
+        });
+        const payload = ticket.getPayload();
+        user.name = payload.name;
+        user.email = payload.email;
+        user.picture = payload.picture;
+      }
+      verify()
+      .then(()=>{
+          req.user = user;
+          next();
+      })
+      .catch(err=>{
+          res.redirect('/login')
+      })
 
 };
 
 
 app.post('/login', (req,res)=>{
-  let token = req.body.token;
+    let token = req.body['token'];
+    async function verify() {
+        const ticket = await client.verifyIdToken({
+            idToken: token,
+            audience: CLIENT_ID  // Specify the CLIENT_ID of the app that accesses the backend
+        });
+        const payload = ticket.getPayload();
+        const userid = payload['sub'];
+      }
+      verify()
+      .then(()=>{
+          res.cookie('session-token', token);
+          res.send('success')
+      })
+      .catch(console.error);
 
-  async function verify() {
-      const ticket = await client.verifyIdToken({
-          idToken: token,
-          audience: CLIENT_ID,  // Specify the CLIENT_ID of the app that accesses the backend
-      });
-      const payload = ticket.getPayload();
-      const userid = payload['sub'];
-    }
-    verify()
-    .then(()=>{
-        res.cookie('session-token', token);
-        res.send('success')
-    })
-    .catch(console.error);
-
-})
+});
 
 app.get('/patient', checkAuthenticated, (req, res)=>{
-  let user = req.user;
-  res.render('home/patient', {user});
-})
+    let user = req.user;
+    res.render('home/patient', {user});
+});
 
 /**Google Auth ends here....
 */
