@@ -67,6 +67,7 @@ const {OAuth2Client} = require('google-auth-library');
 const CLIENT_ID = process.env.googleClientID;
 const client = new OAuth2Client(CLIENT_ID);
 
+/** 
 function checkAuthenticated(req, res, next){
 
     let token = req.cookies['session-token'];
@@ -94,7 +95,7 @@ function checkAuthenticated(req, res, next){
 
 };
 
-
+*/
 app.post('/login', (req,res)=>{
     let token = req.body['token'];
     async function verify() {
@@ -114,7 +115,7 @@ app.post('/login', (req,res)=>{
 
 });
 
-app.get('/patient', checkAuthenticated, (req, res)=>{
+app.get('/patient', (req, res)=>{
     let user = req.user;
     res.render('home/patient', {user});
 });
