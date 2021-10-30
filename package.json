@@ -23,6 +23,7 @@
     "express-flash": "0.0.2",
     "express-session": "^1.17.2",
     "google-auth-library": "^7.10.0",
+    "heroku": "^7.59.1",
     "login-with-twitter": "^1.2.4",
     "mysql": "^2.18.1",
     "passport": "^0.5.0",
