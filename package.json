@@ -24,7 +24,6 @@
     "google-auth-library": "^7.10.0",
     "heroku": "^7.59.1",
     "login-with-twitter": "^1.2.4",
-    "mysql": "^2.18.1",
     "passport": "^0.5.0",
     "passport-github": "^1.1.0",
     "passport-local": "^1.0.0",
