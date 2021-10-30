@@ -28,10 +28,6 @@ router.get('/patientList', function(req, res) {
     res.render("home/patientList");
 });
 
-router.get('/signup', function(req, res) {
-    res.render("home/signup");
-});
-
 router.get('/rawSpiralData', function(req, res) {
     res.render("home/rawSpiralData");
 });
