@@ -1,34 +1,31 @@
 
 <%- include ("../_partials/_doc_header.ejs"); %>
 
-<button id="first_spiral" onclick="display_raw_tapping_data(1)">First Spiral Exercise</button>
+<button id="first_spiral" onclick="display_raw_tapping_data(1)">First Tapping Exercise</button>
 <iframe id="patient1" width="100%" height="450" frameborder="0"
 data-src="https://observablehq.com/embed/@alexandram98/observable-plot?cells=table_4" src="about:blank"></iframe>
 
 <form>
-    <textarea name="comments" id="comments" style="width:96%;height:90px;padding:2%;font-size:1.2em;background-color:rgb(143, 142, 221);">
-    </textarea>
-    <input type="submit" value="Submit">
+    <textarea name="comments" id="comments" placeholder="Leave a comment on this data..." ></textarea>
+    <button onclick="show_response()">Submit comment</button>
 </form>
 
-<button id="second_spiral" onclick="display_raw_tapping_data(2)">Second Spiral Exercise</button>
+<button id="second_spiral" onclick="display_raw_tapping_data(2)">Second Tapping Exercise</button>
 <iframe id="patient2" width="100%" height="450" frameborder="0"
 data-src="https://observablehq.com/embed/@alexandram98/observable-plot?cells=table_5" src="about:blank"></iframe>
 
 <form>
-    <textarea name="comments" id="comments" style="width:96%;height:90px;padding:2%;font-size:1.2em;background-color:rgb(143, 142, 221);">
-    </textarea>
-    <input type="submit" value="Submit">
+    <textarea name="comments" id="comments" placeholder="Leave a comment on this data..." ></textarea>
+    <button onclick="show_response()">Submit comment</button>
 </form>
 
-<button id="third_spiral" onclick="display_raw_tapping_data(3)">Third Spiral Exercise</button>
+<button id="third_spiral" onclick="display_raw_tapping_data(3)">Third Tapping Exercise</button>
 <iframe id="patient3" width="100%" height="450" frameborder="0"
 data-src="https://observablehq.com/embed/@alexandram98/observable-plot?cells=table_6" src="about:blank"></iframe>
 
 <form>
-    <textarea name="comments" id="comments" style="width:96%;height:90px;padding:2%;font-size:1.2em;background-color:rgb(143, 142, 221);">
-    </textarea>
-    <input type="submit" value="Submit">
+    <textarea name="comments" id="comments" placeholder="Leave a comment on this data..." ></textarea>
+    <button onclick="show_response()">Submit comment</button>
 </form>
 
 
@@ -36,6 +33,10 @@ data-src="https://observablehq.com/embed/@alexandram98/observable-plot?cells=tab
     function display_raw_tapping_data(id) {
         var iframe = $("#patient" + id);
         iframe.attr("src", iframe.data("src"));
+    }
+
+    function show_response() {
+        alert('Your comment was recorded.')
     }
 </script>
 

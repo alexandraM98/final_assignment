@@ -6,9 +6,8 @@
 data-src="https://observablehq.com/embed/@alexandram98/observable-plot?cells=table_1" src="about:blank"></iframe>
 
 <form>
-    <textarea name="comments" id="comments" style="width:96%;height:90px;padding:2%;font-size:1.2em;background-color:rgb(143, 142, 221);">
-    </textarea>
-    <input type="submit" value="Submit">
+    <textarea name="comments" id="comments" placeholder="Leave a comment on this data..." ></textarea>
+    <button onclick="show_response()">Submit comment</button>
 </form>
 
 <button id="second_spiral" onclick="display_raw_spiral_data(2)">Second Spiral Exercise</button>
@@ -16,9 +15,8 @@ data-src="https://observablehq.com/embed/@alexandram98/observable-plot?cells=tab
 data-src="https://observablehq.com/embed/@alexandram98/observable-plot?cells=table_2" src="about:blank"></iframe>
 
 <form>
-    <textarea name="comments" id="comments" style="width:96%;height:90px;padding:2%;font-size:1.2em;background-color:rgb(143, 142, 221);">
-    </textarea>
-    <input type="submit" value="Submit">
+    <textarea name="comments" id="comments" placeholder="Leave a comment on this data..." ></textarea>
+    <button onclick="show_response()">Submit comment</button>
 </form>
 
 <button id="third_spiral" onclick="display_raw_spiral_data(3)">Third Spiral Exercise</button>
@@ -26,9 +24,8 @@ data-src="https://observablehq.com/embed/@alexandram98/observable-plot?cells=tab
 data-src="https://observablehq.com/embed/@alexandram98/observable-plot?cells=table_3" src="about:blank"></iframe>
 
 <form>
-    <textarea name="comments" id="comments" style="width:96%;height:90px;padding:2%;font-size:1.2em;background-color:rgb(143, 142, 221);">
-    </textarea>
-    <input type="submit" value="Submit">
+    <textarea name="comments" id="comments" placeholder="Leave a comment on this data..." ></textarea>
+    <button onclick="show_response()">Submit comment</button>
 </form>
 
 
@@ -38,6 +35,10 @@ data-src="https://observablehq.com/embed/@alexandram98/observable-plot?cells=tab
     function display_raw_spiral_data(id) {
         var iframe = $("#patient" + id);
         iframe.attr("src", iframe.data("src"));
+    }
+
+    function show_response() {
+        alert('Your comment was recorded.')
     }
 </script>
 

@@ -24,8 +24,8 @@ router.get('/tappingExerciseData', function(req, res) {
     res.render("home/tappingExerciseData");
 });
 
-router.get('/news', function(req, res) {
-    res.render("home/news");
+router.get('/patientList', function(req, res) {
+    res.render("home/patientList");
 });
 
 router.get('/signup', function(req, res) {
