@@ -46,12 +46,12 @@ app.use(cookieParser()); //used to store our user tokens for the session and als
 /* Initialising a session using passport*/
 app.use(
   session({
-      secret: 'cat',
+      secret: PROCESS_SECRET,
       resave: false,
       saveUninitialized: false,
       cookie: {
-          httpOnly: true, //this cookie is going to be stored only in the server, not in the browser
-          secure: false, //because I am using http and not https
+          httpOnly: true, 
+          secure: true, 
           maxAge: 24 * 60 * 60 * 1000,
       },
   })
