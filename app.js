@@ -88,6 +88,7 @@ function checkAuthenticated(req, res, next){
           next();
       })
       .catch(err=>{
+        console.log(err);
           res.redirect('/login')
       })
 
