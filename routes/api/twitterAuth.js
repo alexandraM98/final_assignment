@@ -15,7 +15,7 @@ router.use(passport.initialize());
 passport.use(new TwitterStrategy({
     consumerKey: apiKey,
     consumerSecret: apiSecretKey,
-    callbackURL: "http://localhost:3000/auth/twitter/callback"
+    callbackURL: "https://data-vis-assig.herokuapp.com/auth/twitter/callback"
   },
   function(token, tokenSecret, profile, cb) {
     /* User.findOrCreate({ twitterId: profile.id }, function (err, user) {
